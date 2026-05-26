@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const API_URL = import.meta.env.VITE_API_URL || 'https://cliniq-ai-kqfz.onrender.com';
+// When deployed on Render, point to the actual backend service.
+// For local dev, set VITE_API_URL=http://localhost:5000
+const API_URL = import.meta.env.VITE_API_URL || 'https://vaidya-ai-w6ed.onrender.com';
 
 const api = axios.create({
   baseURL: API_URL,
@@ -55,7 +57,10 @@ export const checkHealth = async () => {
 export const processConsultation = (audioBlob, patientId) => {
   const formData = new FormData();
   formData.append('audio', audioBlob);
-  if (patientId) formData.append('patientId', patientId);
+  if (patientId) {
+    formData.append('patientId', patientId);
+    formData.append('patientName', patientId); // Use the input value as patient name
+  }
   
   return withFallback(
     () => api.post('/api/consultation/process', formData, {
