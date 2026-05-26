@@ -61,4 +61,8 @@ async function callMongoTool(name, args) {
   }
 }
 
-module.exports = { initMCPClient, getMongoTools, callMongoTool };
+function isMCPConnected() {
+  return mcpClient !== null;
+}
+
+module.exports = { initMCPClient, getMongoTools, callMongoTool, isMCPConnected };

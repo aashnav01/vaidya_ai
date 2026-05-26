@@ -21,6 +21,7 @@ const consultationSchema = new mongoose.Schema({
     generic: String,
     savings: Number
   }],
+  noteEmbedding: [{ type: Number }], // 768-dimensional vector from Gemini text-embedding-004
   createdAt: { type: Date, default: Date.now }
 });
 

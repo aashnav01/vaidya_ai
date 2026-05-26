@@ -3,6 +3,7 @@
   <p><strong>An Intelligent Clinical Assistant & Dashboard for Indian OPDs</strong></p>
   
   [![Live Demo](https://img.shields.io/badge/Live_Demo-vaidya--ai--1.onrender.com-10B981?style=for-the-badge&logo=render)](https://vaidya-ai-1.onrender.com/)
+  [![MongoDB Atlas](https://img.shields.io/badge/MongoDB_Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://www.mongodb.com/atlas)
 </div>
 
 <br />

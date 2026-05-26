@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const router = express.Router();
-const { analyzeConsultation, transcribeAudio } = require('../services/gemini');
+const { analyzeConsultation, transcribeAudio, embedText } = require('../services/gemini');
 const Consultation = require('../models/Consultation');
 const Patient = require('../models/Patient');
 
@@ -50,6 +50,12 @@ router.post('/process', upload.single('audio'), async (req, res) => {
     // Step 3: Analyze with Gemini
     const analysis = await analyzeConsultation(transcript, patientHistory);
 
+    // Step 3.5: Generate Vector Embedding for Atlas Vector Search
+    let noteEmbedding = [];
+    if (analysis.soap?.a) {
+      noteEmbedding = await embedText(analysis.soap.a) || [];
+    }
+
     let dbError = null;
 
     // Step 4: Save to MongoDB (if connected)
@@ -58,6 +64,7 @@ router.post('/process', upload.single('audio'), async (req, res) => {
         patientId: patientId || 'anonymous',
         patientName: req.body.patientName || '',
         transcript,
+        noteEmbedding,
         ...analysis
       });
       await consultation.save();

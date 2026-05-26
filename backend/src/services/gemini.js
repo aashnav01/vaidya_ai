@@ -233,4 +233,16 @@ const getFallbackQueryResponse = (query) => ({
   count: 3
 });
 
-module.exports = { analyzeConsultation, processAgentQuery, transcribeAudio, initGemini };
+const embedText = async (text) => {
+  if (!genAI) return null;
+  try {
+    const embeddingModel = genAI.getGenerativeModel({ model: "text-embedding-004" });
+    const result = await embeddingModel.embedContent(text);
+    return result.embedding.values;
+  } catch (error) {
+    console.error('❌ Embedding generation error:', error.message);
+    return null;
+  }
+};
+
+module.exports = { analyzeConsultation, processAgentQuery, transcribeAudio, initGemini, embedText };
