@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import html2pdf from 'html2pdf.js';
 import MicButton from '../components/MicButton';
 import SkeletonCard from '../components/SkeletonCard';
 import SOAPNote from '../components/SOAPNote';
@@ -31,18 +30,10 @@ const NewConsultation = () => {
   const handleSave = async () => {
     setSaved(true);
     
-    // Generate PDF
-    const element = document.getElementById('consultation-results');
-    if (element) {
-      const opt = {
-        margin:       0.5,
-        filename:     `Consultation_${patientId || 'Patient'}_${new Date().toISOString().split('T')[0]}.pdf`,
-        image:        { type: 'jpeg', quality: 0.98 },
-        html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#0F1117' },
-        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-      };
-      await html2pdf().set(opt).from(element).save();
-    }
+    // Use native browser print which perfectly supports modern CSS (oklch, etc.)
+    setTimeout(() => {
+      window.print();
+    }, 100);
 
     setTimeout(() => {
       setStatus('idle');
@@ -118,7 +109,7 @@ const NewConsultation = () => {
               </div>
             </div>
             
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex justify-center print:hidden">
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleSave}

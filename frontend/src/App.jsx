@@ -22,7 +22,9 @@ function App() {
 
   return (
     <div className="min-h-screen bg-[#0F1117] text-gray-200 selection:bg-[#10B981]/30">
-      <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      <div className="print:hidden">
+        <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
+      </div>
       
       {!isLive && (
         <div className="bg-amber-500/10 border-b border-amber-500/20 px-6 py-2 flex items-center justify-center gap-2">
