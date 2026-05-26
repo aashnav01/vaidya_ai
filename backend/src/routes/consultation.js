@@ -50,6 +50,8 @@ router.post('/process', upload.single('audio'), async (req, res) => {
     // Step 3: Analyze with Gemini
     const analysis = await analyzeConsultation(transcript, patientHistory);
 
+    let dbError = null;
+
     // Step 4: Save to MongoDB (if connected)
     try {
       const consultation = new Consultation({
@@ -83,6 +85,7 @@ router.post('/process', upload.single('audio'), async (req, res) => {
       }
     } catch (e) {
       console.warn('⚠️  Could not save to MongoDB:', e.message);
+      dbError = e.message;
     }
 
     // Step 5: Fetch the updated list of visits to return to the frontend timeline
@@ -105,7 +108,7 @@ router.post('/process', upload.single('audio'), async (req, res) => {
       }
     }
 
-    res.json({ ...analysis, visits });
+    res.json({ ...analysis, visits, _debug: { dbError } });
   } catch (error) {
     console.error('❌ Consultation processing error:', error);
     res.status(500).json({ error: 'Failed to process consultation', details: error.message });

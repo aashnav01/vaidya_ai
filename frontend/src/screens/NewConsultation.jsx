@@ -20,6 +20,9 @@ const NewConsultation = () => {
     try {
       const data = await processConsultation(audioBlob, patientId);
       setResult(data);
+      if (data?._debug?.dbError) {
+        console.error('Database Save Error from Backend:', data._debug.dbError);
+      }
       setStatus('complete');
     } catch (error) {
       console.error(error);
