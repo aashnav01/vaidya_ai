@@ -66,10 +66,19 @@ router.post('/process', upload.single('audio'), async (req, res) => {
         await Patient.findOneAndUpdate(
           { patientId },
           {
-            riskLevel: analysis.riskScore >= 70 ? 'red' : analysis.riskScore >= 30 ? 'amber' : 'green',
-            lastVisit: new Date().toLocaleDateString('en-IN'),
-            diagnosis: analysis.soap?.a?.substring(0, 60) || ''
-          }
+            $set: {
+              riskLevel: analysis.riskScore >= 70 ? 'red' : analysis.riskScore >= 30 ? 'amber' : 'green',
+              lastVisit: new Date().toLocaleDateString('en-IN'),
+              diagnosis: analysis.soap?.a?.substring(0, 60) || ''
+            },
+            $setOnInsert: {
+              name: req.body.patientName || patientId,
+              age: 0,
+              gender: 'O',
+              conditions: []
+            }
+          },
+          { upsert: true, new: true, setDefaultsOnInsert: true }
         );
       }
     } catch (e) {

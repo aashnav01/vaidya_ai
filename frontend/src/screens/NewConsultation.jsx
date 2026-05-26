@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import html2pdf from 'html2pdf.js';
 import MicButton from '../components/MicButton';
 import SkeletonCard from '../components/SkeletonCard';
 import SOAPNote from '../components/SOAPNote';
@@ -27,14 +28,28 @@ const NewConsultation = () => {
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setSaved(true);
+    
+    // Generate PDF
+    const element = document.getElementById('consultation-results');
+    if (element) {
+      const opt = {
+        margin:       0.5,
+        filename:     `Consultation_${patientId || 'Patient'}_${new Date().toISOString().split('T')[0]}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#0F1117' },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      await html2pdf().set(opt).from(element).save();
+    }
+
     setTimeout(() => {
       setStatus('idle');
       setResult(null);
       setSaved(false);
       setPatientId('');
-    }, 2500);
+    }, 1500);
   };
 
   return (
@@ -86,7 +101,7 @@ const NewConsultation = () => {
             animate={{ opacity: 1 }}
             className="w-full"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[#0F1117] rounded-xl">
               <div className="lg:col-span-2 space-y-6">
                 <div className="bg-[#1A1D27] rounded-xl p-6 border border-[#252936]">
                   <SOAPNote data={result.soap} />
@@ -117,7 +132,7 @@ const NewConsultation = () => {
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="animate-bounce">
                       <path d="M20 6 9 17l-5-5"/>
                     </svg>
-                    Consultation Saved
+                    Saved & Downloaded!
                   </>
                 ) : (
                   <>
@@ -126,7 +141,7 @@ const NewConsultation = () => {
                       <polyline points="17 21 17 13 7 13 7 21"/>
                       <polyline points="7 3 7 8 15 8"/>
                     </svg>
-                    Save Consultation
+                    Save & Download PDF
                   </>
                 )}
               </motion.button>
