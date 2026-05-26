@@ -85,7 +85,27 @@ router.post('/process', upload.single('audio'), async (req, res) => {
       console.warn('⚠️  Could not save to MongoDB:', e.message);
     }
 
-    res.json(analysis);
+    // Step 5: Fetch the updated list of visits to return to the frontend timeline
+    let visits = [];
+    if (patientId) {
+      try {
+        const updatedConsultations = await Consultation.find({ patientId })
+          .sort({ createdAt: -1 })
+          .limit(10)
+          .lean();
+        
+        visits = updatedConsultations.map(c => ({
+          date: c.createdAt ? new Date(c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : 'Today',
+          diagnosis: (c.soap?.a || 'General Consultation').substring(0, 40),
+          doctor: 'Dr. AI',
+          notes: (c.soap?.p || '').substring(0, 100)
+        }));
+      } catch (e) {
+        console.warn('Could not fetch updated visits');
+      }
+    }
+
+    res.json({ ...analysis, visits });
   } catch (error) {
     console.error('❌ Consultation processing error:', error);
     res.status(500).json({ error: 'Failed to process consultation', details: error.message });

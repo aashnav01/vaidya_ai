@@ -4,12 +4,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 const PatientTimeline = ({ visits }) => {
   const [hoveredIdx, setHoveredIdx] = useState(null);
 
-  // Mock data if none provided
   const timelineData = visits || [
     { date: 'Oct 12, 2025', diagnosis: 'Hypertension Follow-up', doctor: 'Dr. Sharma', notes: 'BP stable on Telmisartan 40mg.' },
     { date: 'Aug 05, 2025', diagnosis: 'Acute Bronchitis', doctor: 'Dr. Sharma', notes: 'Prescribed antibiotics and cough syrup.' },
     { date: 'Feb 20, 2025', diagnosis: 'Initial Consultation', doctor: 'Dr. Patel', notes: 'Diagnosed with primary hypertension.' }
   ];
+
+  if (visits && visits.length === 0) {
+    return (
+      <div className="bg-[#1A1D27] rounded-xl p-6 border border-[#252936] h-full flex flex-col">
+        <h3 className="text-white font-semibold mb-6">Patient History</h3>
+        <div className="text-gray-500 text-sm mt-4 text-center">No previous history found.</div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-[#1A1D27] rounded-xl p-6 border border-[#252936] h-full flex flex-col">

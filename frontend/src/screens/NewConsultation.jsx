@@ -104,7 +104,7 @@ const NewConsultation = () => {
               <div className="space-y-6">
                 <RiskScore score={result.riskScore} />
                 <div className="h-[400px]">
-                  <PatientTimeline />
+                  <PatientTimeline visits={result.visits} />
                 </div>
               </div>
             </div>
