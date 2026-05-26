@@ -8,7 +8,7 @@ const Section = ({ title, content, colorClass, defaultOpen = true }) => {
     <motion.div 
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
-      className={`border-l-4 ${colorClass} bg-[#1A1D27] rounded-r-xl p-4 mb-4 border border-y-[#252936] border-r-[#252936] overflow-hidden`}
+      className={`border-l-4 ${colorClass} bg-[var(--color-bg-card)] rounded-r-xl p-4 mb-4 border border-y-[var(--color-border)] border-r-[var(--color-border)] overflow-hidden`}
     >
       <div 
         className="flex justify-between items-center cursor-pointer mb-2"

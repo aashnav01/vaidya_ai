@@ -123,7 +123,7 @@ const MicButton = ({ onRecordingComplete }) => {
         whileTap={{ scale: 0.97 }}
         transition={{ duration: 0.1 }}
         className={`relative rounded-full flex items-center justify-center focus:outline-none ${
-          isRecording ? 'w-[300px] h-24 bg-[#1A1D27] border border-red-500/30' : 'w-[120px] h-[120px] bg-[#1A1D27] border border-[#252936]'
+          isRecording ? 'w-[300px] h-24 bg-[var(--color-bg-card)] border border-red-500/30' : 'w-[120px] h-[120px] bg-[var(--color-bg-card)] border border-[var(--color-border)]'
         }`}
         style={!isRecording ? {
           animation: 'breathing-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',

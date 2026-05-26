@@ -45,14 +45,14 @@ const PatientHistory = () => {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by name or ID..."
-            className="w-full bg-[#1A1D27] border border-[#252936] rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-colors"
+            className="w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-colors"
           />
         </div>
       </div>
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 rounded-full border-4 border-[#1A1D27] border-t-[#10B981] animate-spin"></div>
+          <div className="w-8 h-8 rounded-full border-4 border-[var(--color-bg-card)] border-t-[#10B981] animate-spin"></div>
         </div>
       ) : (
         <motion.div 

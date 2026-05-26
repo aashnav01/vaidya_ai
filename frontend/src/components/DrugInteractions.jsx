@@ -4,7 +4,7 @@ const DrugInteractions = ({ interactions }) => {
   if (!interactions || interactions.length === 0) return null;
 
   return (
-    <div className="bg-[#1A1D27] rounded-xl border border-red-500/30 overflow-hidden animate-shake">
+    <div className="bg-[var(--color-bg-card)] rounded-xl border border-red-500/30 overflow-hidden animate-shake">
       <div className="bg-red-500/10 px-4 py-3 border-b border-red-500/20 flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>

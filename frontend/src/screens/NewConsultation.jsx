@@ -7,6 +7,7 @@ import PatientTimeline from '../components/PatientTimeline';
 import RiskScore from '../components/RiskScore';
 import DrugInteractions from '../components/DrugInteractions';
 import JanAushadhi from '../components/JanAushadhi';
+import SimilarCases from '../components/SimilarCases';
 import { processConsultation } from '../api';
 
 const NewConsultation = () => {
@@ -69,7 +70,7 @@ const NewConsultation = () => {
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
                 placeholder="Patient name or ID (optional)..."
-                className="w-full bg-[#1A1D27] border border-[#252936] rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-all text-lg shadow-inner"
+                className="w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-all text-lg shadow-inner"
               />
             </div>
             
@@ -95,9 +96,9 @@ const NewConsultation = () => {
             animate={{ opacity: 1 }}
             className="w-full"
           >
-            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[#0F1117] rounded-xl">
+            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[var(--color-bg-base)] rounded-xl">
               <div className="lg:col-span-2 space-y-6">
-                <div className="bg-[#1A1D27] rounded-xl p-6 border border-[#252936]">
+                <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)]">
                   <SOAPNote data={result.soap} />
                 </div>
                 <DrugInteractions interactions={result.drugInteractions} />
@@ -106,6 +107,7 @@ const NewConsultation = () => {
               
               <div className="space-y-6">
                 <RiskScore score={result.riskScore} />
+                <SimilarCases consultationId={result.id} />
                 <div className="h-[400px]">
                   <PatientTimeline visits={result.visits} />
                 </div>

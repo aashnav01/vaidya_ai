@@ -90,3 +90,13 @@ export const getPatients = () => {
     MOCK_PATIENTS
   );
 };
+
+export const findSimilarCases = async (consultationId) => {
+  try {
+    const response = await api.get(`/api/consultation/${consultationId}/similar`);
+    return response.data.similar || [];
+  } catch (error) {
+    console.warn('⚠️ Similar cases search failed:', error.message);
+    return [];
+  }
+};

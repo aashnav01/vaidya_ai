@@ -18,7 +18,7 @@ const PatientCard = ({ patient }) => {
     <motion.div 
       layout
       onClick={() => setIsExpanded(!isExpanded)}
-      className="bg-[#1A1D27] border border-[#252936] rounded-xl overflow-hidden cursor-pointer hover:border-gray-600 transition-colors"
+      className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl overflow-hidden cursor-pointer hover:border-gray-600 transition-colors"
     >
       <motion.div layout className="p-5 flex items-start justify-between">
         <div>
@@ -33,7 +33,7 @@ const PatientCard = ({ patient }) => {
           </div>
           <div className="flex flex-wrap gap-2">
             {patient.conditions.map((cond, idx) => (
-              <span key={idx} className="bg-[#252936] text-gray-300 px-2 py-1 rounded text-xs">
+              <span key={idx} className="bg-[var(--color-bg-elevated)] text-gray-300 px-2 py-1 rounded text-xs">
                 {cond}
               </span>
             ))}
@@ -54,7 +54,7 @@ const PatientCard = ({ patient }) => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="border-t border-[#252936]"
+            className="border-t border-[var(--color-border)]"
           >
             <div className="p-5">
               <PatientTimeline />

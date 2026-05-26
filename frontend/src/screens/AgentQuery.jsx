@@ -66,7 +66,7 @@ const AgentQuery = () => {
             animate={{ opacity: 1 }}
             className="flex justify-start mb-6"
           >
-            <div className="bg-[#1A1D27] p-4 rounded-2xl rounded-tl-sm shadow flex gap-2 items-center">
+            <div className="bg-[var(--color-bg-card)] p-4 rounded-2xl rounded-tl-sm shadow flex gap-2 items-center">
               <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
               <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
               <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
@@ -83,7 +83,7 @@ const AgentQuery = () => {
               key={idx}
               onClick={() => handleSend(chip)}
               disabled={isLoading}
-              className="bg-[#1A1D27] hover:bg-[#252936] border border-[#252936] text-gray-300 px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
+              className="bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-elevated)] border border-[var(--color-border)] text-gray-300 px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
             >
               {chip}
             </button>
@@ -98,7 +98,7 @@ const AgentQuery = () => {
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Ask anything about your patients..."
             disabled={isLoading}
-            className="w-full bg-[#1A1D27] border border-[#252936] rounded-xl py-4 pl-4 pr-14 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-all"
+            className="w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl py-4 pl-4 pr-14 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-all"
           />
           <button
             onClick={() => handleSend()}

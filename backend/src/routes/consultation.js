@@ -122,4 +122,49 @@ router.post('/process', upload.single('audio'), async (req, res) => {
   }
 });
 
+/**
+ * GET /api/consultation/:id/similar
+ * Uses Atlas Vector Search to find the top 3 consultations with similar clinical presentations.
+ */
+router.get('/:id/similar', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const source = await Consultation.findById(id).lean();
+
+    if (!source || !source.noteEmbedding || source.noteEmbedding.length === 0) {
+      return res.status(404).json({ error: 'Consultation not found or has no embedding.' });
+    }
+
+    const results = await Consultation.aggregate([
+      {
+        $vectorSearch: {
+          index: 'noteEmbedding_index',
+          path: 'noteEmbedding',
+          queryVector: source.noteEmbedding,
+          numCandidates: 50,
+          limit: 4, // Fetch 4, we'll exclude the source itself to get top 3
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          patientName: 1,
+          'soap.a': 1,
+          'soap.s': 1,
+          riskScore: 1,
+          createdAt: 1,
+          score: { $meta: 'vectorSearchScore' }
+        }
+      }
+    ]);
+
+    // Filter out the source document itself
+    const similar = results.filter(r => r._id.toString() !== id).slice(0, 3);
+    res.json({ similar });
+  } catch (error) {
+    console.error('❌ Vector search error:', error.message);
+    res.status(500).json({ error: 'Vector search failed', details: error.message });
+  }
+});
+
 module.exports = router;

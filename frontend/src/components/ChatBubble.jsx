@@ -15,9 +15,9 @@ const ChatBubble = ({ message }) => {
 
   return (
     <div className="flex justify-start mb-6 w-full">
-      <div className="bg-[#1A1D27] border border-[#252936] text-white p-5 rounded-2xl rounded-tl-sm max-w-[85%] shadow-lg w-full">
+      <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] text-white p-5 rounded-2xl rounded-tl-sm max-w-[85%] shadow-lg w-full">
         {message.interpreted_as && (
-          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#252936]">
+          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[var(--color-border)]">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/>
               <path d="m21 21-4.3-4.3"/>
@@ -28,10 +28,10 @@ const ChatBubble = ({ message }) => {
         
         <p className="text-sm leading-relaxed mb-4">{message.insight}</p>
         
-        <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-[#252936]">
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-[var(--color-border)]">
           <div className="flex gap-2">
             {message.collection_queried && (
-              <span className="bg-[#252936] text-gray-300 px-2 py-1 rounded text-[10px] font-semibold tracking-wide uppercase">
+              <span className="bg-[var(--color-bg-elevated)] text-gray-300 px-2 py-1 rounded text-[10px] font-semibold tracking-wide uppercase">
                 {message.collection_queried}
               </span>
             )}
@@ -47,7 +47,7 @@ const ChatBubble = ({ message }) => {
               <path d="M12 2v20"/>
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
-            <span className="text-[10px] font-medium text-gray-400">Powered by Gemini 2.0 Flash + MongoDB Atlas</span>
+            <span className="text-[10px] font-medium text-gray-400">Powered by Gemini 3 Flash + MongoDB Atlas</span>
           </div>
         </div>
       </div>

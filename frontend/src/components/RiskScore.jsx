@@ -37,7 +37,7 @@ const RiskScore = ({ score }) => {
   const data = [{ name: 'Risk', value: animatedScore, fill: color }];
 
   return (
-    <div className="bg-[#1A1D27] rounded-xl p-6 border border-[#252936] flex flex-col items-center justify-center relative">
+    <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)] flex flex-col items-center justify-center relative">
       <h3 className="text-white font-semibold mb-4 self-start">Patient Risk Score</h3>
       <div className="w-full h-[200px] relative flex justify-center items-center">
         <ResponsiveContainer width="100%" height="100%">
@@ -50,7 +50,7 @@ const RiskScore = ({ score }) => {
           >
             <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
             <RadialBar
-              background={{ fill: '#252936' }}
+              background={{ fill: '#1E2D4D' }}
               clockWise
               dataKey="value"
               cornerRadius={10}
