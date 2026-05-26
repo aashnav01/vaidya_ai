@@ -43,10 +43,14 @@ function convertMCPToolsToGemini(mcpTools) {
 
 /**
  * Handle a natural-language agent query using MCP Tool Calling.
+ * Falls back to demo data if Gemini key is missing or fails.
  */
 const processAgentQuery = async (query) => {
   const m = getModel();
-  if (!m) return getFallbackQueryResponse(query);
+  if (!m) {
+    console.warn('⚠️  No Gemini model — returning fallback query response');
+    return getFallbackQueryResponse(query);
+  }
 
   const mcpTools = await getMongoTools();
   const geminiTools = convertMCPToolsToGemini(mcpTools);
@@ -84,7 +88,6 @@ const processAgentQuery = async (query) => {
       for (const call of calls) {
         try {
           const mcpResult = await callMongoTool(call.name, call.args);
-          // mcpResult is usually an array of content objects like { type: 'text', text: '...' }
           const textResponse = mcpResult.map(c => c.text).join('\n');
           
           toolResponses.push({
@@ -113,17 +116,22 @@ const processAgentQuery = async (query) => {
     return JSON.parse(cleaned);
 
   } catch (err) {
-    console.error('Gemini/MCP query error:', err.message);
+    console.error('❌ Gemini/MCP query error:', err.message);
+    console.warn('⚠️  Falling back to demo response');
     return getFallbackQueryResponse(query);
   }
 };
 
 /**
  * Analyze a consultation transcript.
+ * Falls back to demo data if Gemini key is missing or fails.
  */
 const analyzeConsultation = async (transcript, patientHistory = '') => {
   const m = getModel();
-  if (!m) return getFallbackAnalysis(transcript);
+  if (!m) {
+    console.warn('⚠️  No Gemini model — returning fallback analysis');
+    return getFallbackAnalysis(transcript);
+  }
 
   const prompt = `You are VaidyaAI, an expert Indian OPD clinical assistant. Analyze this doctor-patient consultation transcript and return a JSON object.
 
@@ -157,17 +165,22 @@ Return ONLY valid JSON (no markdown, no backticks) with this exact structure:
     const cleaned = text.replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
     return JSON.parse(cleaned);
   } catch (err) {
-    console.error('Gemini analysis error:', err.message);
+    console.error('❌ Gemini analysis error:', err.message);
+    console.warn('⚠️  Falling back to demo analysis');
     return getFallbackAnalysis(transcript);
   }
 };
 
 /**
  * Transcribe audio using Gemini.
+ * Falls back to a sample transcript if Gemini fails.
  */
 const transcribeAudio = async (audioBuffer, mimeType = 'audio/webm') => {
   const m = getModel();
-  if (!m) return 'Patient reports chest discomfort and shortness of breath for 2 days. No radiating pain. History of hypertension.';
+  if (!m) {
+    console.warn('⚠️  No Gemini model — returning fallback transcript');
+    return 'Patient reports chest discomfort and shortness of breath for 2 days. No radiating pain. History of hypertension.';
+  }
 
   try {
     const audioPart = {
@@ -184,12 +197,16 @@ const transcribeAudio = async (audioBuffer, mimeType = 'audio/webm') => {
 
     return result.response.text().trim();
   } catch (err) {
-    console.error('Gemini transcription error:', err.message);
+    console.error('❌ Gemini transcription error:', err.message);
+    console.warn('⚠️  Falling back to demo transcript');
     return 'Patient reports chest discomfort and shortness of breath for 2 days. No radiating pain. History of hypertension.';
   }
 };
 
-// Fallbacks
+// ═══════════════════════════════════════════════
+// Fallback demo data — used when Gemini is unavailable
+// ═══════════════════════════════════════════════
+
 const getFallbackAnalysis = (transcript) => ({
   soap: {
     s: 'Patient reports mild chest discomfort and shortness of breath over the last 2 days. No radiating pain. History of hypertension and diabetes.',

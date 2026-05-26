@@ -4,10 +4,10 @@ const API_URL = import.meta.env.VITE_API_URL || 'https://cliniq-ai-kqfz.onrender
 
 const api = axios.create({
   baseURL: API_URL,
-  timeout: 10000, // 10s timeout
+  timeout: 60000, // 60s timeout for Render cold starts
 });
 
-// Mock data matching the requested records
+// Mock data — used ONLY when backend is completely unreachable
 const MOCK_PATIENTS = [
   { id: 'P001', name: 'Ramesh Kumar', age: 58, gender: 'M', conditions: ['Hypertension', 'Diabetes'], lastVisit: '3 days ago', riskLevel: 'amber', diagnosis: 'BP fluctuation' },
   { id: 'P002', name: 'Sunita Devi', age: 34, gender: 'F', conditions: ['Dengue History'], lastVisit: '1 week ago', riskLevel: 'green', diagnosis: 'Pregnancy follow-up' },
@@ -32,14 +32,13 @@ const MOCK_CONSULTATION_RESULT = {
   ]
 };
 
-// Fallback logic wrapper for demo mode
+// Try real API first → fall back to mock data only if backend is unreachable
 const withFallback = async (apiCall, fallbackData, delay = 800) => {
   try {
     const response = await apiCall();
     return response.data;
   } catch (error) {
-    console.warn('API unavailable, using mock data for demo mode.', error.message);
-    // Simulate network delay for realistic feel
+    console.warn('⚠️ Backend unavailable, falling back to demo data.', error.message);
     return new Promise((resolve) => setTimeout(() => resolve(fallbackData), delay));
   }
 };
@@ -63,7 +62,7 @@ export const processConsultation = (audioBlob, patientId) => {
       headers: { 'Content-Type': 'multipart/form-data' }
     }),
     MOCK_CONSULTATION_RESULT,
-    2000 // Fake 2s processing time for Gemini
+    2000
   );
 };
 
