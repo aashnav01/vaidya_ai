@@ -18,6 +18,7 @@ const Navbar = ({ activeTab, setActiveTab }) => {
     { id: 'consultation', label: 'New Consultation' },
     { id: 'query', label: 'Agent Query' },
     { id: 'history', label: 'Patient History' },
+    { id: 'analytics', label: 'Analytics' },
   ];
 
   return (

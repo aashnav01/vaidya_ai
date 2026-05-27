@@ -5,12 +5,27 @@ import SplashScreen from './components/SplashScreen';
 import NewConsultation from './screens/NewConsultation';
 import AgentQuery from './screens/AgentQuery';
 import PatientHistory from './screens/PatientHistory';
+import Analytics from './screens/Analytics';
+import ToastNotification from './components/ToastNotification';
 import { checkHealth } from './api';
 
 function App() {
   const [activeTab, setActiveTab] = useState('consultation');
   const [isLive, setIsLive] = useState(true);
   const [showSplash, setShowSplash] = useState(true);
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = (title, message) => {
+    const id = Date.now();
+    setToasts(prev => [...prev, { id, title, message }]);
+    setTimeout(() => {
+      removeToast(id);
+    }, 5000);
+  };
+
+  const removeToast = (id) => {
+    setToasts(prev => prev.filter(t => t.id !== id));
+  };
 
   useEffect(() => {
     const pollHealth = async () => {
@@ -20,6 +35,30 @@ function App() {
     pollHealth();
     const interval = setInterval(pollHealth, 10000);
     return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    // Setup Server-Sent Events for Change Streams
+    const API_URL = import.meta.env.VITE_API_URL || 'https://vaidya-ai-w6ed.onrender.com';
+    const sse = new EventSource(`${API_URL}/api/patients/stream`);
+    
+    sse.onmessage = (event) => {
+      try {
+        const data = JSON.parse(event.data);
+        if (data.type === 'insert' && data.patient) {
+          addToast(
+            'New Patient Added',
+            `${data.patient.name} (${data.patient.patientId}) was just saved to the database.`
+          );
+        }
+      } catch (e) {
+        // Ignore parse errors from keep-alive
+      }
+    };
+
+    return () => {
+      sse.close();
+    };
   }, []);
 
   return (
@@ -75,8 +114,22 @@ function App() {
                 <PatientHistory />
               </motion.div>
             )}
+            {activeTab === 'analytics' && (
+              <motion.div
+                key="analytics"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 20 }}
+                transition={{ duration: 0.2 }}
+              >
+                <Analytics />
+              </motion.div>
+            )}
           </AnimatePresence>
         </main>
+        
+        {/* Render Toast Notifications */}
+        <ToastNotification toasts={toasts} removeToast={removeToast} />
       </div>
     </>
   );

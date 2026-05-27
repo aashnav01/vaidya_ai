@@ -100,3 +100,33 @@ export const findSimilarCases = async (consultationId) => {
     return [];
   }
 };
+
+const MOCK_ANALYTICS = {
+  riskLevels: [
+    { name: 'red', value: 4 },
+    { name: 'amber', value: 8 },
+    { name: 'green', value: 8 }
+  ],
+  topConditions: [
+    { name: 'Hypertension', count: 6 },
+    { name: 'Type 2 Diabetes', count: 4 },
+    { name: 'Asthma', count: 3 },
+    { name: 'COPD', count: 2 },
+    { name: 'Migraine', count: 2 }
+  ],
+  ageGroups: [
+    { name: '0 - 29', count: 3 },
+    { name: '30 - 44', count: 5 },
+    { name: '45 - 59', count: 8 },
+    { name: '60+', count: 4 }
+  ],
+  totalSavings: 1250
+};
+
+export const getAnalytics = () => {
+  return withFallback(
+    () => api.get('/api/analytics'),
+    MOCK_ANALYTICS
+  );
+};
+

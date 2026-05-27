@@ -6,6 +6,7 @@ const consultationRoutes = require('./routes/consultation');
 const agentRoutes = require('./routes/agent');
 const patientRoutes = require('./routes/patients');
 const healthRoutes = require('./routes/health');
+const analyticsRoutes = require('./routes/analytics');
 const { initMCPClient } = require('./mcp/client');
 
 const app = express();
@@ -25,6 +26,7 @@ app.use('/api/consultation', consultationRoutes);
 app.use('/api/agent', agentRoutes);
 app.use('/api/patients', patientRoutes);
 app.use('/api/health', healthRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Root
 app.get('/', (req, res) => {

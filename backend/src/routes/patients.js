@@ -27,6 +27,45 @@ const FALLBACK_PATIENTS = [
 ];
 
 /**
+ * GET /api/patients/stream
+ * SSE Endpoint for real-time patient inserts
+ */
+router.get('/stream', async (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  res.flushHeaders();
+
+  // Send initial connected event
+  res.write(`data: ${JSON.stringify({ message: 'Connected to Patient Stream' })}\n\n`);
+
+  try {
+    // Only attempt to watch if mongoose is connected
+    if (require('mongoose').connection.readyState === 1) {
+      const changeStream = Patient.watch([{ $match: { operationType: 'insert' } }]);
+      
+      changeStream.on('change', (change) => {
+        const newPatient = change.fullDocument;
+        res.write(`data: ${JSON.stringify({ type: 'insert', patient: newPatient })}\n\n`);
+      });
+
+      req.on('close', () => {
+        changeStream.close();
+      });
+    } else {
+      // If no DB connection, just keep the stream alive
+      const keepAlive = setInterval(() => {
+        res.write(': keepalive\n\n');
+      }, 30000);
+      req.on('close', () => clearInterval(keepAlive));
+    }
+  } catch (error) {
+    console.error('Change stream error:', error);
+    res.end();
+  }
+});
+
+/**
  * GET /api/patients
  */
 router.get('/', async (req, res) => {
