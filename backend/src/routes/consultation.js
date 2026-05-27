@@ -138,7 +138,7 @@ router.get('/:id/similar', async (req, res) => {
     const results = await Consultation.aggregate([
       {
         $vectorSearch: {
-          index: 'noteEmbedding_index',
+          index: 'noteEmbedding_ind',
           path: 'noteEmbedding',
           queryVector: source.noteEmbedding,
           numCandidates: 50,
