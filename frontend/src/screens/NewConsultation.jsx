@@ -60,7 +60,7 @@ const NewConsultation = () => {
           >
             <div className="w-full relative mb-12">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#9CA3AF]">
                   <circle cx="11" cy="11" r="8"/>
                   <path d="m21 21-4.3-4.3"/>
                 </svg>
@@ -70,7 +70,7 @@ const NewConsultation = () => {
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
                 placeholder="Patient name or ID (optional)..."
-                className="w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl py-4 pl-12 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] focus:ring-1 focus:ring-[#10B981] transition-all text-lg shadow-inner"
+                className="w-full bg-white border border-[#E5E7EB] rounded-xl py-4 pl-12 pr-4 text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0D9488] focus:ring-1 focus:ring-[#0D9488] transition-all text-lg"
               />
             </div>
             
@@ -96,9 +96,9 @@ const NewConsultation = () => {
             animate={{ opacity: 1 }}
             className="w-full"
           >
-            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[var(--color-bg-base)] rounded-xl">
+            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[#F8F9FA] rounded-xl">
               <div className="lg:col-span-2 space-y-6">
-                <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)]">
+                <div className="bg-white rounded-xl p-6 border border-[#E5E7EB]">
                   <SOAPNote data={result.soap} />
                 </div>
                 <DrugInteractions interactions={result.drugInteractions} />
@@ -119,8 +119,8 @@ const NewConsultation = () => {
                 whileTap={{ scale: 0.97 }}
                 onClick={handleSave}
                 disabled={saved}
-                className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg shadow-lg transition-all ${
-                  saved ? 'bg-emerald-600 text-white cursor-default' : 'bg-[#10B981] hover:bg-[#059669] text-white hover:shadow-emerald-500/20'
+                className={`flex items-center gap-2 px-8 py-4 rounded-xl font-bold text-lg transition-all ${
+                  saved ? 'bg-[#059669] text-white cursor-default' : 'bg-[#0D9488] hover:bg-[#0F766E] text-white'
                 }`}
               >
                 {saved ? (

@@ -66,10 +66,10 @@ const AgentQuery = () => {
             animate={{ opacity: 1 }}
             className="flex justify-start mb-6"
           >
-            <div className="bg-[var(--color-bg-card)] p-4 rounded-2xl rounded-tl-sm shadow flex gap-2 items-center">
-              <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-              <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-              <div className="w-2 h-2 rounded-full bg-gray-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+            <div className="bg-white border border-[#E5E7EB] p-4 rounded-2xl rounded-tl-sm flex gap-2 items-center">
+              <div className="w-2 h-2 rounded-full bg-[#9CA3AF] animate-bounce" style={{ animationDelay: '0ms' }}></div>
+              <div className="w-2 h-2 rounded-full bg-[#9CA3AF] animate-bounce" style={{ animationDelay: '150ms' }}></div>
+              <div className="w-2 h-2 rounded-full bg-[#9CA3AF] animate-bounce" style={{ animationDelay: '300ms' }}></div>
             </div>
           </motion.div>
         )}
@@ -83,7 +83,7 @@ const AgentQuery = () => {
               key={idx}
               onClick={() => handleSend(chip)}
               disabled={isLoading}
-              className="bg-[var(--color-bg-card)] hover:bg-[var(--color-bg-elevated)] border border-[var(--color-border)] text-gray-300 px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
+              className="bg-white hover:bg-[#F3F4F6] border border-[#E5E7EB] text-[#374151] px-3 py-1.5 rounded-full text-xs font-medium transition-colors"
             >
               {chip}
             </button>
@@ -98,12 +98,12 @@ const AgentQuery = () => {
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Ask anything about your patients..."
             disabled={isLoading}
-            className="w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-xl py-4 pl-4 pr-14 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-all"
+            className="w-full bg-white border border-[#E5E7EB] rounded-xl py-4 pl-4 pr-14 text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0D9488] transition-all"
           />
           <button
             onClick={() => handleSend()}
             disabled={!input.trim() || isLoading}
-            className="absolute right-2 top-2 p-2 bg-[#10B981] text-white rounded-lg hover:bg-[#059669] disabled:opacity-50 disabled:hover:bg-[#10B981] transition-colors"
+            className="absolute right-2 top-2 p-2 bg-[#0D9488] text-white rounded-lg hover:bg-[#0F766E] disabled:opacity-50 disabled:hover:bg-[#0D9488] transition-colors"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="m22 2-7 20-4-9-9-4Z"/>

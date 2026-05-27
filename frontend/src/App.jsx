@@ -38,7 +38,6 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // Setup Server-Sent Events for Change Streams
     const API_URL = import.meta.env.VITE_API_URL || 'https://vaidya-ai-w6ed.onrender.com';
     const sse = new EventSource(`${API_URL}/api/patients/stream`);
     
@@ -51,8 +50,8 @@ function App() {
             `${data.patient.name} (${data.patient.patientId}) was just saved to the database.`
           );
         }
-      } catch (e) {
-        // Ignore parse errors from keep-alive
+      } catch {
+        // Keep-alive SSE messages are not JSON payloads.
       }
     };
 
@@ -67,15 +66,15 @@ function App() {
         {showSplash && <SplashScreen onComplete={() => setShowSplash(false)} />}
       </AnimatePresence>
 
-      <div className={`min-h-screen bg-[var(--color-bg-base)] text-gray-200 selection:bg-[#10B981]/30 ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
+      <div className={`min-h-screen bg-[var(--color-bg-base)] text-[#111827] selection:bg-[#0D9488]/20 ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
         <div className="print:hidden">
           <Navbar activeTab={activeTab} setActiveTab={setActiveTab} />
         </div>
         
         {!isLive && (
-          <div className="bg-amber-500/10 border-b border-amber-500/20 px-6 py-2 flex items-center justify-center gap-2">
-            <span className="text-amber-500 text-sm mt-0.5">⚠️</span>
-            <p className="text-amber-400 text-sm font-medium">Demo mode — connect backend to enable AI features</p>
+          <div className="bg-[#FEF3C7] border-b border-[#D97706]/20 px-6 py-2 flex items-center justify-center gap-2">
+            <span className="text-[#D97706] text-sm mt-0.5">⚠️</span>
+            <p className="text-[#D97706] text-sm font-medium">Demo mode — connect backend to enable AI features</p>
           </div>
         )}
 
@@ -128,7 +127,6 @@ function App() {
           </AnimatePresence>
         </main>
         
-        {/* Render Toast Notifications */}
         <ToastNotification toasts={toasts} removeToast={removeToast} />
       </div>
     </>

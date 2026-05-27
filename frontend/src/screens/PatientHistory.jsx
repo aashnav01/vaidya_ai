@@ -34,13 +34,13 @@ const PatientHistory = () => {
   return (
     <div className="max-w-6xl mx-auto px-6 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
-        <h1 className="text-2xl font-bold text-white">Patient History</h1>
+        <h1 className="text-2xl font-medium text-[#111827]">Patient History</h1>
         
         <div className="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
           <select 
             value={filterRisk} 
             onChange={(e) => setFilterRisk(e.target.value)}
-            className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-lg py-2.5 px-4 text-white focus:outline-none focus:border-[#10B981] transition-colors"
+            className="bg-white border border-[#E5E7EB] rounded-lg py-2.5 px-4 text-[#111827] focus:outline-none focus:border-[#0D9488] transition-colors"
           >
             <option value="All">All Risks</option>
             <option value="Red">Red (High Risk)</option>
@@ -50,7 +50,7 @@ const PatientHistory = () => {
 
           <div className="relative w-full sm:w-80">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#9CA3AF]">
                 <circle cx="11" cy="11" r="8"/>
                 <path d="m21 21-4.3-4.3"/>
               </svg>
@@ -60,7 +60,7 @@ const PatientHistory = () => {
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search by name or ID..."
-              className="w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-lg py-2.5 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-[#10B981] transition-colors"
+              className="w-full bg-white border border-[#E5E7EB] rounded-lg py-2.5 pl-10 pr-4 text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0D9488] transition-colors"
             />
           </div>
         </div>
@@ -68,7 +68,7 @@ const PatientHistory = () => {
 
       {loading ? (
         <div className="flex justify-center py-20">
-          <div className="w-8 h-8 rounded-full border-4 border-[var(--color-bg-card)] border-t-[#10B981] animate-spin"></div>
+          <div className="w-8 h-8 rounded-full border-4 border-[#E5E7EB] border-t-[#0D9488] animate-spin"></div>
         </div>
       ) : (
         <motion.div 
@@ -80,7 +80,7 @@ const PatientHistory = () => {
           ))}
           
           {filteredPatients.length === 0 && (
-            <div className="col-span-full py-12 text-center text-gray-500">
+            <div className="col-span-full py-12 text-center text-[#9CA3AF]">
               No patients found matching your filters.
             </div>
           )}

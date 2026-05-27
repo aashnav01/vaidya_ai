@@ -8,9 +8,9 @@ import {
 import { getAnalytics } from '../api';
 
 const COLORS = {
-  red: '#EF4444',
-  amber: '#F59E0B',
-  green: '#10B981'
+  red: '#DC2626',
+  amber: '#D97706',
+  green: '#059669'
 };
 
 const Analytics = () => {
@@ -35,7 +35,7 @@ const Analytics = () => {
   if (loading || !data) {
     return (
       <div className="flex justify-center items-center h-full min-h-[60vh]">
-        <div className="w-10 h-10 rounded-full border-4 border-[var(--color-bg-card)] border-t-[#10B981] animate-spin"></div>
+        <div className="w-10 h-10 rounded-full border-4 border-[#E5E7EB] border-t-[#0D9488] animate-spin"></div>
       </div>
     );
   }
@@ -44,24 +44,24 @@ const Analytics = () => {
     <div className="max-w-6xl mx-auto px-6 py-8">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#10B981]">
+          <h1 className="text-2xl font-medium text-[#111827] flex items-center gap-2">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/>
             </svg>
             MongoDB Analytics
           </h1>
-          <p className="text-gray-400 text-sm mt-1">Live aggregations from the MongoDB database</p>
+          <p className="text-[#6B7280] text-sm mt-1">Live aggregations from the MongoDB database</p>
         </div>
         
-        <div className="bg-[var(--color-bg-card)] border border-[#10B981]/30 rounded-xl px-6 py-3 flex items-center gap-4 shadow-lg shadow-[#10B981]/5">
-          <div className="p-2 bg-[#10B981]/20 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <div className="bg-white border border-[#0D9488]/20 rounded-xl px-6 py-3 flex items-center gap-4">
+          <div className="p-2 bg-[#0D9488]/10 rounded-lg">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
           </div>
           <div>
-            <p className="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Savings Generated</p>
-            <p className="text-2xl font-bold text-white">₹{data.totalSavings.toLocaleString()}</p>
+            <p className="text-xs text-[#6B7280] font-medium uppercase tracking-wider">Total Savings Generated</p>
+            <p className="text-2xl font-bold text-[#111827]">₹{data.totalSavings.toLocaleString()}</p>
           </div>
         </div>
       </div>
@@ -72,9 +72,9 @@ const Analytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
-          className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl p-6 shadow-sm"
+          className="bg-white border border-[#E5E7EB] rounded-2xl p-6"
         >
-          <h2 className="text-lg font-semibold text-white mb-6 border-b border-[var(--color-border)] pb-2">Patients by Risk Level</h2>
+          <h2 className="text-lg font-medium text-[#111827] mb-6 border-b border-[#E5E7EB] pb-2">Patients by Risk Level</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
@@ -92,10 +92,10 @@ const Analytics = () => {
                   ))}
                 </Pie>
                 <Tooltip 
-                  contentStyle={{ backgroundColor: 'var(--color-bg-elevated)', borderColor: 'var(--color-border)', borderRadius: '8px' }}
-                  itemStyle={{ color: '#fff' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: '8px', color: '#111827' }}
+                  itemStyle={{ color: '#111827' }}
                 />
-                <Legend formatter={(value) => <span className="capitalize text-gray-300">{value} Risk</span>} />
+                <Legend formatter={(value) => <span className="capitalize text-[#374151]">{value} Risk</span>} />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -106,22 +106,22 @@ const Analytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.1 }}
-          className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl p-6 shadow-sm"
+          className="bg-white border border-[#E5E7EB] rounded-2xl p-6"
         >
-          <h2 className="text-lg font-semibold text-white mb-6 border-b border-[var(--color-border)] pb-2">Top 5 Conditions</h2>
+          <h2 className="text-lg font-medium text-[#111827] mb-6 border-b border-[#E5E7EB] pb-2">Top 5 Conditions</h2>
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.topConditions} layout="vertical" margin={{ top: 5, right: 30, left: 40, bottom: 5 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" horizontal={false} />
-                <XAxis type="number" stroke="#9ca3af" fontSize={12} />
-                <YAxis dataKey="name" type="category" stroke="#9ca3af" fontSize={12} width={100} />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" horizontal={false} />
+                <XAxis type="number" stroke="#9CA3AF" fontSize={12} />
+                <YAxis dataKey="name" type="category" stroke="#9CA3AF" fontSize={12} width={100} />
                 <Tooltip 
-                  cursor={{fill: 'rgba(255, 255, 255, 0.05)'}}
-                  contentStyle={{ backgroundColor: 'var(--color-bg-elevated)', borderColor: 'var(--color-border)', borderRadius: '8px', color: '#fff' }}
+                  cursor={{fill: 'rgba(0,0,0,0.03)'}}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: '8px', color: '#111827' }}
                 />
-                <Bar dataKey="count" fill="#3B82F6" radius={[0, 4, 4, 0]}>
+                <Bar dataKey="count" fill="#0D9488" radius={[0, 4, 4, 0]}>
                   {data.topConditions.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#3B82F6' : '#60A5FA'} />
+                    <Cell key={`cell-${index}`} fill={index % 2 === 0 ? '#0D9488' : '#5EEAD4'} />
                   ))}
                 </Bar>
               </BarChart>
@@ -134,25 +134,25 @@ const Analytics = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
-          className="bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl p-6 shadow-sm lg:col-span-2"
+          className="bg-white border border-[#E5E7EB] rounded-2xl p-6 lg:col-span-2"
         >
-          <h2 className="text-lg font-semibold text-white mb-6 border-b border-[var(--color-border)] pb-2">Patient Demographics (Age Groups)</h2>
+          <h2 className="text-lg font-medium text-[#111827] mb-6 border-b border-[#E5E7EB] pb-2">Patient Demographics (Age Groups)</h2>
           <div className="h-72">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={data.ageGroups} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
                 <defs>
                   <linearGradient id="colorCount" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#10B981" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#10B981" stopOpacity={0}/>
+                    <stop offset="5%" stopColor="#0D9488" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#0D9488" stopOpacity={0}/>
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="name" stroke="#9ca3af" />
-                <YAxis stroke="#9ca3af" />
-                <CartesianGrid strokeDasharray="3 3" stroke="var(--color-border)" vertical={false} />
+                <XAxis dataKey="name" stroke="#9CA3AF" />
+                <YAxis stroke="#9CA3AF" />
+                <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" vertical={false} />
                 <Tooltip 
-                  contentStyle={{ backgroundColor: 'var(--color-bg-elevated)', borderColor: 'var(--color-border)', borderRadius: '8px', color: '#fff' }}
+                  contentStyle={{ backgroundColor: '#FFFFFF', borderColor: '#E5E7EB', borderRadius: '8px', color: '#111827' }}
                 />
-                <Area type="monotone" dataKey="count" stroke="#10B981" fillOpacity={1} fill="url(#colorCount)" />
+                <Area type="monotone" dataKey="count" stroke="#0D9488" fillOpacity={1} fill="url(#colorCount)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>

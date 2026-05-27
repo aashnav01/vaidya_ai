@@ -12,18 +12,18 @@ const PatientTimeline = ({ visits }) => {
 
   if (visits && visits.length === 0) {
     return (
-      <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)] h-full flex flex-col">
-        <h3 className="text-white font-semibold mb-6">Patient History</h3>
-        <div className="text-gray-500 text-sm mt-4 text-center">No previous history found.</div>
+      <div className="bg-white rounded-xl p-6 border border-[#E5E7EB] h-full flex flex-col">
+        <h3 className="text-[#111827] font-medium mb-6">Patient History</h3>
+        <div className="text-[#6B7280] text-sm mt-4 text-center">No previous history found.</div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)] h-full flex flex-col">
-      <h3 className="text-white font-semibold mb-6">Patient History</h3>
+    <div className="bg-white rounded-xl p-6 border border-[#E5E7EB] h-full flex flex-col">
+      <h3 className="text-[#111827] font-medium mb-6">Patient History</h3>
       
-      <div className="relative border-l-2 border-[var(--color-border)] ml-3 flex-1 flex flex-col gap-6">
+      <div className="relative border-l-2 border-[#E5E7EB] ml-3 flex-1 flex flex-col gap-6">
         {timelineData.map((visit, idx) => (
           <div 
             key={idx} 
@@ -32,11 +32,11 @@ const PatientTimeline = ({ visits }) => {
             onMouseLeave={() => setHoveredIdx(null)}
           >
             {/* Timeline dot */}
-            <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 border-[var(--color-bg-card)] ${idx === 0 ? 'bg-[#10B981]' : 'bg-gray-500'}`}></div>
+            <div className={`absolute -left-[9px] top-1.5 w-4 h-4 rounded-full border-4 border-white ${idx === 0 ? 'bg-[#0D9488]' : 'bg-[#D1D5DB]'}`}></div>
             
             <div className="cursor-pointer">
-              <span className="text-xs font-semibold text-gray-500">{visit.date}</span>
-              <h4 className={`font-medium ${idx === 0 ? 'text-white' : 'text-gray-300'}`}>{visit.diagnosis}</h4>
+              <span className="text-xs font-semibold text-[#9CA3AF]">{visit.date}</span>
+              <h4 className={`font-medium ${idx === 0 ? 'text-[#111827]' : 'text-[#374151]'}`}>{visit.diagnosis}</h4>
             </div>
 
             <AnimatePresence>
@@ -46,10 +46,10 @@ const PatientTimeline = ({ visits }) => {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.15 }}
-                  className="absolute left-6 top-14 z-10 w-[240px] bg-[var(--color-bg-elevated)] border border-gray-700 p-3 rounded-lg shadow-xl"
+                  className="absolute left-6 top-14 z-10 w-[240px] bg-white border border-[#E5E7EB] p-3 rounded-lg shadow-lg"
                 >
-                  <div className="text-xs text-gray-400 mb-1">Seen by {visit.doctor}</div>
-                  <p className="text-sm text-gray-200">{visit.notes}</p>
+                  <div className="text-xs text-[#6B7280] mb-1">Seen by {visit.doctor}</div>
+                  <p className="text-sm text-[#374151]">{visit.notes}</p>
                 </motion.div>
               )}
             </AnimatePresence>

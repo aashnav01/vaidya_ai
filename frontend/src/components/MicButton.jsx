@@ -100,7 +100,7 @@ const MicButton = ({ onRecordingComplete }) => {
       for (let i = 0; i < bufferLength; i++) {
         barHeight = dataArray[i] / 2;
         
-        ctx.fillStyle = '#EF4444'; // Red for recording
+        ctx.fillStyle = '#DC2626'; // Red for recording
         ctx.fillRect(x, canvas.height / 2 - barHeight / 2, barWidth, barHeight);
         
         x += barWidth + 2;
@@ -123,11 +123,11 @@ const MicButton = ({ onRecordingComplete }) => {
         whileTap={{ scale: 0.97 }}
         transition={{ duration: 0.1 }}
         className={`relative rounded-full flex items-center justify-center focus:outline-none ${
-          isRecording ? 'w-[300px] h-24 bg-[var(--color-bg-card)] border border-red-500/30' : 'w-[120px] h-[120px] bg-[var(--color-bg-card)] border border-[var(--color-border)]'
+          isRecording ? 'w-[300px] h-24 bg-white border border-[#DC2626]/30' : 'w-[120px] h-[120px] bg-white border border-[#E5E7EB]'
         }`}
         style={!isRecording ? {
           animation: 'breathing-pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-          boxShadow: '0 0 30px rgba(16, 185, 129, 0.15), inset 0 0 20px rgba(16, 185, 129, 0.1)'
+          boxShadow: '0 0 30px rgba(13, 148, 136, 0.1)'
         } : {
           animation: 'ripple-glow 2s cubic-bezier(0, 0.2, 0.8, 1) infinite',
         }}
@@ -142,7 +142,7 @@ const MicButton = ({ onRecordingComplete }) => {
               exit={{ opacity: 0 }}
               className="flex flex-col items-center gap-2"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/>
                 <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
                 <line x1="12" x2="12" y1="19" y2="22"/>
@@ -157,8 +157,8 @@ const MicButton = ({ onRecordingComplete }) => {
               className="flex items-center w-full px-6 justify-between"
             >
               <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
-                <span className="font-mono text-red-500 font-medium">{formatTime(recordingTime)}</span>
+                <div className="w-3 h-3 rounded-full bg-[#DC2626] animate-pulse"></div>
+                <span className="font-mono text-[#DC2626] font-medium">{formatTime(recordingTime)}</span>
               </div>
               <canvas ref={canvasRef} width="120" height="40" className="opacity-80" />
             </motion.div>
@@ -168,7 +168,7 @@ const MicButton = ({ onRecordingComplete }) => {
       
       <motion.p 
         layout
-        className={`mt-6 text-sm font-medium ${isRecording ? 'text-red-400' : 'text-gray-400'}`}
+        className={`mt-6 text-sm font-medium ${isRecording ? 'text-[#DC2626]' : 'text-[#6B7280]'}`}
       >
         {isRecording ? 'Tap to stop recording' : 'Start Consultation'}
       </motion.p>

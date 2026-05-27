@@ -6,7 +6,7 @@ const ChatBubble = ({ message }) => {
   if (isUser) {
     return (
       <div className="flex justify-end mb-6">
-        <div className="bg-[#10B981] text-white px-5 py-3 rounded-2xl rounded-tr-sm max-w-[75%] shadow-lg">
+        <div className="bg-[#F0FDFA] text-[#111827] px-5 py-3 rounded-2xl rounded-tr-sm max-w-[75%]">
           <p className="text-sm font-medium">{message.content}</p>
         </div>
       </div>
@@ -15,39 +15,39 @@ const ChatBubble = ({ message }) => {
 
   return (
     <div className="flex justify-start mb-6 w-full">
-      <div className="bg-[var(--color-bg-card)] border border-[var(--color-border)] text-white p-5 rounded-2xl rounded-tl-sm max-w-[85%] shadow-lg w-full">
+      <div className="bg-white border border-[#E5E7EB] text-[#374151] p-5 rounded-2xl rounded-tl-sm max-w-[85%] w-full">
         {message.interpreted_as && (
-          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[var(--color-border)]">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <div className="flex items-center gap-2 mb-3 pb-3 border-b border-[#E5E7EB]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="11" cy="11" r="8"/>
               <path d="m21 21-4.3-4.3"/>
             </svg>
-            <span className="text-xs text-gray-400 font-medium">Interpreted as: <span className="text-gray-300">{message.interpreted_as}</span></span>
+            <span className="text-xs text-[#6B7280] font-medium">Interpreted as: <span className="text-[#374151]">{message.interpreted_as}</span></span>
           </div>
         )}
         
         <p className="text-sm leading-relaxed mb-4">{message.insight}</p>
         
-        <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-[var(--color-border)]">
+        <div className="flex flex-wrap items-center justify-between gap-3 mt-4 pt-3 border-t border-[#E5E7EB]">
           <div className="flex gap-2">
             {message.collection_queried && (
-              <span className="bg-[var(--color-bg-elevated)] text-gray-300 px-2 py-1 rounded text-[10px] font-semibold tracking-wide uppercase">
+              <span className="bg-[#F3F4F6] text-[#374151] px-2 py-1 rounded text-[10px] font-semibold tracking-wide uppercase">
                 {message.collection_queried}
               </span>
             )}
             {message.count !== undefined && (
-              <span className="bg-[#10B981]/20 text-[#10B981] px-2 py-1 rounded text-[10px] font-semibold tracking-wide uppercase">
+              <span className="bg-[#0D9488]/10 text-[#0D9488] px-2 py-1 rounded text-[10px] font-semibold tracking-wide uppercase">
                 {message.count} Matches
               </span>
             )}
           </div>
           
           <div className="flex items-center gap-1.5 opacity-70">
-            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#10B981]">
+            <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#0D9488]">
               <path d="M12 2v20"/>
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
-            <span className="text-[10px] font-medium text-gray-400">Powered by Gemini 3 Flash + MongoDB Atlas</span>
+            <span className="text-[10px] font-medium text-[#6B7280]">Powered by Gemini 3 Flash + MongoDB Atlas</span>
           </div>
         </div>
       </div>

@@ -17,33 +17,33 @@ const SimilarCases = ({ consultationId }) => {
   };
 
   const getRiskColor = (score) => {
-    if (score >= 70) return { bg: 'bg-red-500/10', border: 'border-red-500/30', text: 'text-red-400', dot: 'bg-red-500' };
-    if (score >= 30) return { bg: 'bg-amber-500/10', border: 'border-amber-500/30', text: 'text-amber-400', dot: 'bg-amber-500' };
-    return { bg: 'bg-emerald-500/10', border: 'border-emerald-500/30', text: 'text-emerald-400', dot: 'bg-emerald-500' };
+    if (score >= 70) return { bg: 'bg-red-50', border: 'border-red-200', text: 'text-[#DC2626]', dot: 'bg-[#DC2626]' };
+    if (score >= 30) return { bg: 'bg-amber-50', border: 'border-amber-200', text: 'text-[#D97706]', dot: 'bg-[#D97706]' };
+    return { bg: 'bg-emerald-50', border: 'border-emerald-200', text: 'text-[#059669]', dot: 'bg-[#059669]' };
   };
 
   return (
-    <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)]">
+    <div className="bg-white rounded-xl p-6 border border-[#E5E7EB]">
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-2">
-          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-indigo-400">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#0D9488]">
             <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
             <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
             <line x1="12" y1="22.08" x2="12" y2="12"/>
           </svg>
-          <h3 className="text-white font-semibold text-lg">Atlas Vector Search</h3>
+          <h3 className="text-[#111827] font-medium text-lg">Atlas Vector Search</h3>
         </div>
-        <span className="text-[10px] text-gray-500 font-medium bg-[var(--color-bg-base)] px-2 py-1 rounded">MongoDB AI</span>
+        <span className="text-[10px] text-[#6B7280] font-medium bg-[#F3F4F6] px-2 py-1 rounded">MongoDB AI</span>
       </div>
       
-      <p className="text-gray-400 text-sm mb-4">Find past patients with similar clinical presentations using semantic AI search.</p>
+      <p className="text-[#6B7280] text-sm mb-4">Find past patients with similar clinical presentations using semantic AI search.</p>
 
       {!searched && (
         <motion.button
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           onClick={handleSearch}
-          className="w-full py-3 rounded-lg font-semibold text-sm bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white transition-all shadow-lg shadow-indigo-500/20"
+          className="w-full py-3 rounded-lg font-semibold text-sm bg-[#0D9488] hover:bg-[#0F766E] text-white transition-all"
         >
           🔍 Find Similar Cases
         </motion.button>
@@ -66,7 +66,7 @@ const SimilarCases = ({ consultationId }) => {
           >
             {cases.length === 0 ? (
               <div className="text-center py-6">
-                <p className="text-gray-500 text-sm">No similar cases found. Run the database seeder or add more consultations first.</p>
+                <p className="text-[#9CA3AF] text-sm">No similar cases found. Run the database seeder or add more consultations first.</p>
               </div>
             ) : (
               cases.map((c, i) => {
@@ -84,20 +84,20 @@ const SimilarCases = ({ consultationId }) => {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
                           <div className={`w-2 h-2 rounded-full ${risk.dot}`} />
-                          <span className="text-white font-medium text-sm truncate">
+                          <span className="text-[#111827] font-medium text-sm truncate">
                             {c.patientName || 'Anonymous'}
                           </span>
                           <span className={`text-xs font-bold ${risk.text}`}>
                             Risk: {c.riskScore || 0}
                           </span>
                         </div>
-                        <p className="text-gray-400 text-xs mt-1 line-clamp-2">
+                        <p className="text-[#6B7280] text-xs mt-1 line-clamp-2">
                           {c.soap?.a || c.soap?.s || 'No assessment available'}
                         </p>
                       </div>
                       <div className="ml-3 flex flex-col items-end shrink-0">
-                        <span className="text-indigo-400 font-bold text-lg">{similarity}%</span>
-                        <span className="text-gray-500 text-[10px]">match</span>
+                        <span className="text-[#0D9488] font-bold text-lg">{similarity}%</span>
+                        <span className="text-[#9CA3AF] text-[10px]">match</span>
                       </div>
                     </div>
                   </motion.div>
@@ -109,7 +109,7 @@ const SimilarCases = ({ consultationId }) => {
               <motion.button
                 whileTap={{ scale: 0.97 }}
                 onClick={handleSearch}
-                className="w-full py-2 rounded-lg text-xs font-medium text-indigo-400 hover:text-indigo-300 bg-indigo-500/5 hover:bg-indigo-500/10 border border-indigo-500/20 transition-all"
+                className="w-full py-2 rounded-lg text-xs font-medium text-[#0D9488] bg-[#0D9488]/5 hover:bg-[#0D9488]/10 border border-[#0D9488]/20 transition-all"
               >
                 ↻ Search Again
               </motion.button>

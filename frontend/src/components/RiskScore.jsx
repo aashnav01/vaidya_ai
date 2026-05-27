@@ -24,21 +24,21 @@ const RiskScore = ({ score }) => {
     window.requestAnimationFrame(step);
   }, [score]);
 
-  let color = '#10B981'; // Green
+  let color = '#059669'; // Green
   let label = 'Low Risk';
   if (score >= 70) {
-    color = '#EF4444'; // Red
+    color = '#DC2626'; // Red
     label = 'High Risk';
   } else if (score >= 30) {
-    color = '#F59E0B'; // Amber
+    color = '#D97706'; // Amber
     label = 'Moderate Risk';
   }
 
   const data = [{ name: 'Risk', value: animatedScore, fill: color }];
 
   return (
-    <div className="bg-[var(--color-bg-card)] rounded-xl p-6 border border-[var(--color-border)] flex flex-col items-center justify-center relative">
-      <h3 className="text-white font-semibold mb-4 self-start">Patient Risk Score</h3>
+    <div className="bg-white rounded-xl p-6 border border-[#E5E7EB] flex flex-col items-center justify-center relative">
+      <h3 className="text-[#111827] font-medium mb-4 self-start">Patient Risk Score</h3>
       <div className="w-full h-[200px] relative flex justify-center items-center">
         <ResponsiveContainer width="100%" height="100%">
           <RadialBarChart 
@@ -50,7 +50,7 @@ const RiskScore = ({ score }) => {
           >
             <PolarAngleAxis type="number" domain={[0, 100]} angleAxisId={0} tick={false} />
             <RadialBar
-              background={{ fill: '#1E2D4D' }}
+              background={{ fill: '#E5E7EB' }}
               clockWise
               dataKey="value"
               cornerRadius={10}
@@ -58,7 +58,7 @@ const RiskScore = ({ score }) => {
           </RadialBarChart>
         </ResponsiveContainer>
         <div className="absolute flex flex-col items-center top-[40%]">
-          <span className="text-4xl font-bold text-white">{animatedScore}</span>
+          <span className="text-4xl font-semibold text-[#111827]">{animatedScore}</span>
           <span className="text-xs font-medium mt-1" style={{ color }}>{label}</span>
         </div>
       </div>
