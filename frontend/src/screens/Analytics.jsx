@@ -53,17 +53,7 @@ const Analytics = () => {
           <p className="text-[#6B7280] text-sm mt-1">Live aggregations from the MongoDB database</p>
         </div>
         
-        <div className="bg-white border border-[#0D9488]/20 rounded-xl px-6 py-3 flex items-center gap-4">
-          <div className="p-2 bg-[#0D9488]/10 rounded-lg">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0D9488" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="12" x2="12" y1="2" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-            </svg>
-          </div>
-          <div>
-            <p className="text-xs text-[#6B7280] font-medium uppercase tracking-wider">Total Savings Generated</p>
-            <p className="text-2xl font-bold text-[#111827]">₹{data.totalSavings.toLocaleString()}</p>
-          </div>
-        </div>
+
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
