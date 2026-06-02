@@ -37,12 +37,6 @@ router.get('/', async (req, res) => {
       }
     ]);
 
-    // Aggregation 4: Total savings generated via Jan Aushadhi
-    const savings = await Consultation.aggregate([
-      { $unwind: '$janAushadhi' },
-      { $group: { _id: null, totalSavings: { $sum: '$janAushadhi.savings' } } }
-    ]);
-
     res.json({
       riskLevels: riskLevels.map(r => ({ name: r._id, value: r.count })),
       topConditions: topConditions.map(c => ({ name: c._id, count: c.count })),
@@ -53,8 +47,7 @@ router.get('/', async (req, res) => {
         else if (a._id === 45) label = '45 - 59';
         else if (a._id === 60) label = '60+';
         return { name: label, count: a.count };
-      }),
-      totalSavings: savings.length > 0 ? savings[0].totalSavings : 0
+      })
     });
   } catch (error) {
     console.error('Analytics Aggregation Error:', error);
@@ -77,8 +70,7 @@ router.get('/', async (req, res) => {
         { name: '30 - 44', count: 5 },
         { name: '45 - 59', count: 8 },
         { name: '60+', count: 4 }
-      ],
-      totalSavings: 1250
+      ]
     });
   }
 });

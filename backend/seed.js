@@ -68,7 +68,22 @@ const generateConsultation = (patient) => {
     soap: note,
     riskScore: isHighRisk ? 85 : patient.riskLevel === 'amber' ? 55 : 20,
     drugInteractions: isHighRisk ? [{ drugs: ["Aspirin", "Ibuprofen"], severity: "High", effect: "Increased risk of bleeding" }] : [],
-    janAushadhi: [{ branded: 'Standard Brand', generic: 'Standard Generic', savings: 50 }],
+    insuranceSummary: {
+      icd10Code: isHighRisk ? "I20.9" : "J02.9",
+      diagnosisDescription: patient.diagnosis,
+      onsetDate: "2 days ago",
+      isEmergency: isHighRisk,
+      preExistingConditions: patient.conditions,
+      proposedProcedures: isHighRisk ? ["ECG", "Troponin"] : [],
+      estimatedCost: {
+        consultation: 500,
+        investigations: isHighRisk ? 2500 : 0,
+        medicines: 800,
+        total: isHighRisk ? 3800 : 1300
+      },
+      preAuthRequired: isHighRisk,
+      tpaReadyNotes: `Patient presented with symptoms of ${patient.diagnosis}. Risk level is ${patient.riskLevel}.`
+    },
   };
 };
 

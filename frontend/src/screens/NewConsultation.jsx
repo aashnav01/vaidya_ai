@@ -6,15 +6,20 @@ import SOAPNote from '../components/SOAPNote';
 import PatientTimeline from '../components/PatientTimeline';
 import RiskScore from '../components/RiskScore';
 import DrugInteractions from '../components/DrugInteractions';
-import JanAushadhi from '../components/JanAushadhi';
+import InsuranceSummary from '../components/InsuranceSummary';
 import SimilarCases from '../components/SimilarCases';
-import { processConsultation } from '../api';
+import { processConsultation, getPatients } from '../api';
 
 const NewConsultation = () => {
   const [patientId, setPatientId] = useState('');
   const [status, setStatus] = useState('idle'); // idle | processing | complete
   const [result, setResult] = useState(null);
   const [saved, setSaved] = useState(false);
+  const [patientsList, setPatientsList] = useState([]);
+
+  React.useEffect(() => {
+    getPatients().then(setPatientsList).catch(console.error);
+  }, []);
 
   const handleRecordingComplete = async (audioBlob) => {
     setStatus('processing');
@@ -67,11 +72,17 @@ const NewConsultation = () => {
               </div>
               <input
                 type="text"
+                list="patients-list"
                 value={patientId}
                 onChange={(e) => setPatientId(e.target.value)}
                 placeholder="Patient name or ID (optional)..."
                 className="w-full bg-white border border-[#E5E7EB] rounded-xl py-4 pl-12 pr-4 text-[#111827] placeholder-[#9CA3AF] focus:outline-none focus:border-[#0D9488] focus:ring-1 focus:ring-[#0D9488] transition-all text-lg"
               />
+              <datalist id="patients-list">
+                {patientsList.map(p => (
+                  <option key={p.id} value={p.id}>{p.name} - {p.id}</option>
+                ))}
+              </datalist>
             </div>
             
             <MicButton onRecordingComplete={handleRecordingComplete} />
@@ -96,19 +107,19 @@ const NewConsultation = () => {
             animate={{ opacity: 1 }}
             className="w-full"
           >
-            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[#F8F9FA] rounded-xl">
-              <div className="lg:col-span-2 space-y-6">
-                <div className="bg-white rounded-xl p-6 border border-[#E5E7EB]">
+            <div id="consultation-results" className="grid grid-cols-1 lg:grid-cols-3 gap-6 p-4 bg-[#F8F9FA] rounded-xl print:block print:bg-white print:p-0">
+              <div className="lg:col-span-2 space-y-6 print:space-y-4 print:w-full">
+                <div className="bg-white rounded-xl p-6 border border-[#E5E7EB] print:border-none print:p-0">
                   <SOAPNote data={result.soap} />
                 </div>
                 <DrugInteractions interactions={result.drugInteractions} />
-                <JanAushadhi alternatives={result.janAushadhi} />
+                {result.insuranceSummary && <InsuranceSummary summary={result.insuranceSummary} />}
               </div>
               
-              <div className="space-y-6">
+              <div className="space-y-6 print:mt-6 print:w-full">
                 <RiskScore score={result.riskScore} />
                 <SimilarCases consultationId={result.id} />
-                <div className="h-[400px]">
+                <div className="h-[400px] print:h-auto">
                   <PatientTimeline visits={result.visits} />
                 </div>
               </div>

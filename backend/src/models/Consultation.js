@@ -16,11 +16,22 @@ const consultationSchema = new mongoose.Schema({
     severity: { type: String, enum: ['low', 'medium', 'high'] },
     description: String
   }],
-  janAushadhi: [{
-    branded: String,
-    generic: String,
-    savings: Number
-  }],
+  insuranceSummary: {
+    icd10Code: String,
+    diagnosisDescription: String,
+    onsetDate: String,
+    isEmergency: Boolean,
+    preExistingConditions: [String],
+    proposedProcedures: [String],
+    estimatedCost: {
+      consultation: Number,
+      investigations: Number,
+      medicines: Number,
+      total: Number
+    },
+    preAuthRequired: Boolean,
+    tpaReadyNotes: String
+  },
   noteEmbedding: [{ type: Number }], // 768-dimensional vector from Gemini text-embedding-004
   createdAt: { type: Date, default: Date.now }
 });

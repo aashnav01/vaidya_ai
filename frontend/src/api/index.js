@@ -28,10 +28,22 @@ const MOCK_CONSULTATION_RESULT = {
   drugInteractions: [
     { drugs: 'Aspirin + Ibuprofen', severity: 'high', description: 'Increased risk of GI bleeding' },
   ],
-  janAushadhi: [
-    { branded: 'Augmentin 625', generic: 'Amoxicillin + Clavulanic Acid', savings: 125 },
-    { branded: 'Telma 40', generic: 'Telmisartan 40mg', savings: 45 },
-  ]
+  insuranceSummary: {
+    icd10Code: "J44.1",
+    diagnosisDescription: "Acute Exacerbation of COPD",
+    onsetDate: "2 days ago",
+    isEmergency: true,
+    preExistingConditions: ["Hypertension", "Diabetes"],
+    proposedProcedures: ["ECG", "Troponin"],
+    estimatedCost: {
+      consultation: 500,
+      investigations: 1200,
+      medicines: 450,
+      total: 2150
+    },
+    preAuthRequired: false,
+    tpaReadyNotes: "Patient presented with a 2-day history of shortness of breath and chest discomfort. Needs cardiac evaluation."
+  }
 };
 
 // Try real API first → fall back to mock data only if backend is unreachable
@@ -119,8 +131,7 @@ const MOCK_ANALYTICS = {
     { name: '30 - 44', count: 5 },
     { name: '45 - 59', count: 8 },
     { name: '60+', count: 4 }
-  ],
-  totalSavings: 1250
+  ]
 };
 
 export const getAnalytics = () => {

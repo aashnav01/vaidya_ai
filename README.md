@@ -8,7 +8,7 @@
 
 <br />
 
-VaidyaAI is an advanced clinical assistant designed to streamline Outpatient Department (OPD) workflows for doctors in India. By passively listening to doctor-patient consultations, it automatically generates structured clinical notes, assesses risk, flags drug interactions, and suggests affordable generic alternatives.
+VaidyaAI is an advanced clinical assistant designed to streamline Outpatient Department (OPD) workflows for doctors. By passively listening to doctor-patient consultations, it automatically generates structured clinical notes, assesses risk, flags drug interactions, and creates structured insurance pre-authorization summaries.
 
 ## ✨ Features
 
@@ -16,7 +16,7 @@ VaidyaAI is an advanced clinical assistant designed to streamline Outpatient Dep
 - **📝 Automated SOAP Notes**: Extracts Subjective, Objective, Assessment, and Plan data seamlessly.
 - **⚠️ Real-time Risk Stratification**: Assigns Red/Amber/Green risk scores to prioritize critical patients.
 - **💊 Drug Interaction Checker**: Flags dangerous polypharmacy interactions (e.g., Aspirin + Ibuprofen).
-- **💸 Jan Aushadhi Recommendations**: Suggests affordable generic medicine alternatives from the Indian Jan Aushadhi scheme, calculating estimated savings for patients.
+- **🛡️ Insurance Pre-Authorization**: Automatically structures diagnosis codes (ICD-10), clinical rationale, and estimated costs into a TPA-ready summary.
 - **📄 Instant PDF Export**: Download consultation records with a single click.
 - **🤖 MCP-Powered Agent Search**: Query patient history across the MongoDB database using natural language (e.g., *"Show me all high-risk cardiology patients from this week"*).
 
@@ -33,7 +33,7 @@ VaidyaAI uses a modern, AI-first architecture:
 - **Frontend**: React + Vite + Tailwind CSS + Framer Motion for a sleek, responsive dashboard.
 - **Backend**: Express.js + Node.js
 - **Database**: MongoDB (Mongoose) for storing patient records and consultation history.
-- **AI Core**: Google Gemini 3 Flash for audio transcription and clinical NLP.
+- **AI Core**: Google Gemini 2.0 Flash for audio transcription and clinical NLP.
 - **Tooling**: Model Context Protocol (MCP) to allow Gemini to directly query the MongoDB database safely.
 
 ## 💻 Local Development Setup

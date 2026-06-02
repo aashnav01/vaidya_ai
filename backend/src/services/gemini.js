@@ -9,10 +9,10 @@ const initGemini = () => {
     console.warn('⚠️  GEMINI_API_KEY not set — AI features will use fallback responses');
     return null;
   }
-  genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-  model = genAI.getGenerativeModel({ model: 'gemini-3-flash-preview' });
-  console.log('✅ Gemini 3 Flash Preview initialized');
-  return model;
+    genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    console.log('✅ Gemini 2.0 Flash initialized');
+    return model;
 };
 
 const getModel = () => {
@@ -56,7 +56,7 @@ const processAgentQuery = async (query) => {
   const geminiTools = convertMCPToolsToGemini(mcpTools);
 
   const mcpModel = genAI.getGenerativeModel({
-    model: 'gemini-3-flash-preview',
+    model: 'gemini-2.0-flash',
     tools: geminiTools.length > 0 ? geminiTools : undefined
   });
 
@@ -135,7 +135,7 @@ const analyzeConsultation = async (transcript, patientHistory = '') => {
 
   const prompt = `You are VaidyaAI, an expert Indian OPD clinical assistant. Analyze this doctor-patient consultation transcript and return a JSON object.
 
-Context: This is from an Indian government/private hospital OPD setting. Consider Indian drug brands, Jan Aushadhi (government generic pharmacy) alternatives, and Indian clinical guidelines.
+Context: This is from an Indian government/private hospital OPD setting. Consider Indian clinical guidelines.
 
 ${patientHistory ? `Patient History:\n${patientHistory}\n` : ''}
 
@@ -154,9 +154,17 @@ Return ONLY valid JSON (no markdown, no backticks) with this exact structure:
   "drugInteractions": [
     { "drugs": "Drug A + Drug B", "severity": "high|medium|low", "description": "Clinical significance" }
   ],
-  "janAushadhi": [
-    { "branded": "Brand name with dose", "generic": "Generic equivalent from Jan Aushadhi", "savings": <estimated savings in INR> }
-  ]
+  "insuranceSummary": {
+    "icd10Code": "string (best matching ICD-10 diagnosis code)",
+    "diagnosisDescription": "string (plain English diagnosis)",
+    "onsetDate": "string (approximate date of symptom onset from transcript)",
+    "isEmergency": "boolean",
+    "preExistingConditions": ["array of strings"],
+    "proposedProcedures": ["array of strings"],
+    "estimatedCost": { "consultation": 0, "investigations": 0, "medicines": 0, "total": 0 },
+    "preAuthRequired": "boolean (true if estimated total > 5000 or procedure is surgical)",
+    "tpaReadyNotes": "string (one paragraph summary written for a TPA reviewer)"
+  }
 }`;
 
   try {
@@ -219,11 +227,22 @@ const getFallbackAnalysis = (transcript) => ({
     { drugs: 'Aspirin + Ibuprofen', severity: 'high', description: 'Increased risk of GI bleeding. Avoid concurrent use.' },
     { drugs: 'Metformin + Contrast Dye', severity: 'medium', description: 'Hold Metformin 48h before contrast studies.' }
   ],
-  janAushadhi: [
-    { branded: 'Augmentin 625mg', generic: 'Amoxicillin + Clavulanic Acid 625mg', savings: 125 },
-    { branded: 'Telma 40mg', generic: 'Telmisartan 40mg', savings: 45 },
-    { branded: 'Glycomet GP 2', generic: 'Metformin + Glimepiride', savings: 80 }
-  ]
+  insuranceSummary: {
+    icd10Code: "J44.1",
+    diagnosisDescription: "Acute Exacerbation of COPD",
+    onsetDate: "2 days ago",
+    isEmergency: true,
+    preExistingConditions: ["Hypertension", "Diabetes"],
+    proposedProcedures: ["ECG", "Troponin"],
+    estimatedCost: {
+      consultation: 500,
+      investigations: 1200,
+      medicines: 450,
+      total: 2150
+    },
+    preAuthRequired: false,
+    tpaReadyNotes: "Patient presented with a 2-day history of shortness of breath and chest discomfort. Given the history of hypertension and diabetes, acute coronary syndrome needs to be ruled out alongside the primary diagnosis of COPD exacerbation. Basic investigations (ECG, Troponin) have been ordered."
+  }
 });
 
 const getFallbackQueryResponse = (query) => ({
