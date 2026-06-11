@@ -1,5 +1,6 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const { getMongoTools, callMongoTool } = require('../mcp/client');
+const { searchClinicalGuidelines } = require('./agentBuilder');
 
 let genAI = null;
 let model = null;
@@ -54,6 +55,23 @@ const processAgentQuery = async (query) => {
 
   const mcpTools = await getMongoTools();
   const geminiTools = convertMCPToolsToGemini(mcpTools);
+  
+  // Inject Google Cloud Agent Builder tool
+  if (geminiTools.length === 0) geminiTools.push({ functionDeclarations: [] });
+  geminiTools[0].functionDeclarations.push({
+    name: 'search_clinical_guidelines',
+    description: 'Search clinical guidelines, medical knowledge, and disease protocols using Google Cloud Agent Builder.',
+    parameters: {
+      type: 'OBJECT',
+      properties: {
+        query: {
+          type: 'STRING',
+          description: 'Search query (e.g. "Dengue treatment protocol", "Hypertension guidelines")'
+        }
+      },
+      required: ['query']
+    }
+  });
 
   const mcpModel = genAI.getGenerativeModel({
     model: 'gemini-2.0-flash',
@@ -87,8 +105,15 @@ const processAgentQuery = async (query) => {
       
       for (const call of calls) {
         try {
-          const mcpResult = await callMongoTool(call.name, call.args);
-          const textResponse = mcpResult.map(c => c.text).join('\n');
+          let textResponse = '';
+          if (call.name === 'search_clinical_guidelines') {
+            console.log('🛠️  Calling Agent Builder Tool:', call.args);
+            const guidelines = await searchClinicalGuidelines(call.args.query);
+            textResponse = JSON.stringify(guidelines, null, 2);
+          } else {
+            const mcpResult = await callMongoTool(call.name, call.args);
+            textResponse = mcpResult.map(c => c.text).join('\n');
+          }
           
           toolResponses.push({
             functionResponse: {
@@ -133,9 +158,22 @@ const analyzeConsultation = async (transcript, patientHistory = '') => {
     return getFallbackAnalysis(transcript);
   }
 
+  // Extract basic keywords to query Agent Builder
+  let searchKeywords = 'OPD Clinical Guidelines';
+  if (/dengue/i.test(transcript)) searchKeywords = 'Dengue Guidelines';
+  else if (/hypertension|bp|blood pressure/i.test(transcript)) searchKeywords = 'Hypertension Guidelines';
+  else if (/copd|asthma|wheezing/i.test(transcript)) searchKeywords = 'COPD Asthma Guidelines';
+  else if (/chest pain|angina|cardiac/i.test(transcript)) searchKeywords = 'Angina Chest Pain Guidelines';
+
+  const guidelines = await searchClinicalGuidelines(searchKeywords);
+  const guidelinesContext = guidelines.map(g => `- **${g.title}**: ${g.snippet} (Source: ${g.link})`).join('\n');
+
   const prompt = `You are VaidyaAI, an expert Indian OPD clinical assistant. Analyze this doctor-patient consultation transcript and return a JSON object.
 
 Context: This is from an Indian government/private hospital OPD setting. Consider Indian clinical guidelines.
+
+Grounding Clinical Guidelines (Retrieved via Google Cloud Agent Builder):
+${guidelinesContext}
 
 ${patientHistory ? `Patient History:\n${patientHistory}\n` : ''}
 

@@ -47,7 +47,7 @@ const ChatBubble = ({ message }) => {
               <path d="M12 2v20"/>
               <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
             </svg>
-            <span className="text-[10px] font-medium text-[#6B7280]">Powered by Gemini 3 Flash + MongoDB Atlas</span>
+            <span className="text-[10px] font-medium text-[#6B7280]">Powered by Gemini + Google Cloud Agent Builder + MongoDB Atlas</span>
           </div>
         </div>
       </div>

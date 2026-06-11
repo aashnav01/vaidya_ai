@@ -34,6 +34,7 @@ VaidyaAI uses a modern, AI-first architecture:
 - **Backend**: Express.js + Node.js
 - **Database**: MongoDB (Mongoose) for storing patient records and consultation history.
 - **AI Core**: Google Gemini 2.0 Flash for audio transcription and clinical NLP.
+- **Knowledge Retrieval**: Google Cloud Agent Builder (Discovery Engine) for semantic search of clinical guidelines and protocols to ground the AI.
 - **Tooling**: Model Context Protocol (MCP) to allow Gemini to directly query the MongoDB database safely.
 
 ## 💻 Local Development Setup
@@ -51,7 +52,8 @@ npm install
 
 # Create a .env file and add your keys
 cp .env.example .env
-# Edit .env with MONGODB_URI and GEMINI_API_KEY
+# Edit .env with MONGODB_URI, GEMINI_API_KEY, and Google Cloud Agent Builder variables
+# Ensure your environment has Application Default Credentials configured if using Agent Builder.
 
 npm run dev
 ```
